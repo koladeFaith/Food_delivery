@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import img from "../images/imgi_1_restaurant-hero-DtyuuM56.jpg";
 import { FiUser } from "react-icons/fi";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
 const Home = () => {
+  const [activeTab, setActiveTab] = useState("all");
   return (
     <>
       <div
@@ -69,7 +70,14 @@ const Home = () => {
         </div>
         {/* Tabs */}
         <div>
-          
+          <button onClick={() => setActiveTab("all")}>All items</button>
+          <button onClick={() => setActiveTab("mains")}>Mains</button>
+          <button onClick={() => setActiveTab("salads")}>Salads</button>
+        </div>
+        <div>
+          {activeTab === "all" && <h1>This is all items</h1>}
+          {activeTab === "mains" && <h1>This is all mains</h1>}
+          {activeTab === "salads" && <h1>This is all salads</h1>}
         </div>
       </div>
     </>

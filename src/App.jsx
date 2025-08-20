@@ -35,12 +35,17 @@
 // export default App
 import React from "react";
 import Home from "./components/Home";
+import { Route, Routes } from "react-router-dom";
+import Products from "./components/Products";
 
 const App = () => {
   return (
-    <div>
-      <Home />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<Products />} />
+      </Routes>
+    </>
   );
 };
 

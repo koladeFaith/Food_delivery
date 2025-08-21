@@ -27,7 +27,7 @@ const Home = () => {
               {" "}
               Delicious Food Delivered
             </h1>
-            <p className="text-[16px] md:text-[18px] md:py-4  font-meduim pt-2 text-[#ffd3c5]">
+            <p className="text-[16px]  md:text-[18px] md:py-4  font-meduim pt-2 text-[#ffd3c5]">
               Fresh ingredients, amazing flavors, and fast delivery to your door
             </p>
             <div

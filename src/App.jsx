@@ -39,6 +39,7 @@ import { Route, Routes } from "react-router-dom";
 import Products from "./components/Products";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -47,7 +48,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />{" "}
         <Route path="/signup" element={<Signup />} />{" "}
-        <Route path="/login" element={<Signin />} />
+        <Route path="/login" element={<Signin />} />{" "}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );

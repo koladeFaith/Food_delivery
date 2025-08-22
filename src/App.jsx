@@ -37,13 +37,17 @@ import React from "react";
 import Home from "./components/Home";
 import { Route, Routes } from "react-router-dom";
 import Products from "./components/Products";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product" element={<Products />} />
+        <Route path="/product" element={<Products />} />{" "}
+        <Route path="/signup" element={<Signup />} />{" "}
+        <Route path="/login" element={<Signin />} />
       </Routes>
     </>
   );

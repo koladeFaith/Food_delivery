@@ -1,6 +1,11 @@
 import React from "react";
+import { useState } from "react";
 
 const Product = ({ productImg, name, price, description }) => {
+  const [num, setNum] = useState(1);
+  const cartBtn = () => {
+    setNum(num + 1);
+  };
   return (
     <>
       <li className=" my-5 hover:transition-transform hover:duration-100 hover:ease-in-out hover:scale-105 border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
@@ -19,7 +24,9 @@ const Product = ({ productImg, name, price, description }) => {
             <p className="text-[#df6d52] font-extrabold text-[20px]">
               ${price}
             </p>
-            <p className="text-[22px] bg-[#f76c21] w-[35px] text-white rounded-lg text-center">
+            <p
+              className="text-[22px] bg-[#f76c21] w-[35px] text-white rounded-lg text-center"
+              onClick={cartBtn}>
               +
             </p>
           </div>

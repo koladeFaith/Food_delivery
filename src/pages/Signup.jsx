@@ -24,8 +24,11 @@ const Signup = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await axios.post(
-          "https://food-delivery-backend-n6at.onrender.com/signup",
-          values
+          "https://food-delivery-backend-n6at.onrender.com/user/signup",
+          values,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
         );
 
         toast.success(response.data.message);

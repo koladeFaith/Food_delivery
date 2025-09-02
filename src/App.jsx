@@ -48,8 +48,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />{" "}
-        {/* <Route path="/signup" element={<Signup />} />{" "}
-        <Route path="/login" element={<Signin />} />{" "} */}
+        <Route path="/signup" element={<Signup />} />{" "}
+        {/* <Route path="/login" element={<Signin />} />{" "} */}
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Toaster richColors position="top-center" />

@@ -39,7 +39,8 @@ import { Route, Routes } from "react-router-dom";
 import Products from "./components/Products";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Auth";
+import { Toaster } from "sonner";
 
 const App = () => {
   return (
@@ -47,10 +48,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />{" "}
-        <Route path="/signup" element={<Signup />} />{" "}
-        <Route path="/login" element={<Signin />} />{" "}
+        {/* <Route path="/signup" element={<Signup />} />{" "}
+        <Route path="/login" element={<Signin />} />{" "} */}
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Toaster richColors position="top-center" />
     </>
   );
 };

@@ -11,6 +11,7 @@ const productData = [
       "Juicy beef patty with fresh lettuce, tomato, cheese, and our special sauce",
     price: 9.99,
     soldOut: false,
+    category: "main",
   },
   {
     productImg: product2,
@@ -19,6 +20,7 @@ const productData = [
       "Crisp romaine lettuce with grilled chicken, croutons, and parmesan cheese",
     price: 12.99,
     soldOut: false,
+    category: "main",
   },
   {
     productImg: product3,
@@ -27,6 +29,7 @@ const productData = [
       "Fresh mozzarella, tomato sauce, and basil on our hand-tossed dough",
     price: 14.99,
     soldOut: false,
+    category: "main",
   },
   {
     productImg: product4,
@@ -35,39 +38,69 @@ const productData = [
       "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
     price: 15.99,
     soldOut: false,
+    category: "main",
   },
   {
     productImg: product4,
-    name: "Bacon Cheeseburger",
+    name: "Bacon Cheeseburgerss",
     description:
       "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
     price: 15.99,
     soldOut: false,
+    category: "salad",
   },
   {
     productImg: product4,
-    name: "Bacon Cheeseburger",
+    name: "Bacon Cheeseburgerrr",
     description:
       "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
     price: 15.99,
     soldOut: false,
+    category: "salad",
   },
 ];
-const Products = () => {
+const Products = ({ activeTab }) => {
   return (
     <>
       <div className="overflow-hidden cursor-pointer">
         <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-25 overflow-hidden">
-          {productData.map((product) => (
-            <Product
-              key={product.name}
-              productImg={product.productImg}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              soldOut={product.soldOut}
-            />
-          ))}
+          {activeTab === "all" &&
+            productData.map((product) => (
+              <Product
+                key={product.name}
+                productImg={product.productImg}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                soldOut={product.soldOut}
+              />
+            ))}
+          {activeTab === "main" &&
+            productData
+              .filter((product) => product.category === "main")
+              .map((product) => (
+                <Product
+                  key={product.name}
+                  productImg={product.productImg}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  soldOut={product.soldOut}
+                />
+              ))}
+          {activeTab === "salad" &&
+            productData
+              .filter((product) => product.category === "salad")
+              .map((product) => (
+                <Product
+                  key={product.name}
+                  productImg={product.productImg}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  soldOut={product.soldOut}
+                />
+              ))}
         </ul>
         ;
       </div>

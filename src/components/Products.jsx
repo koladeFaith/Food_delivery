@@ -59,13 +59,21 @@ const productData = [
     category: "salad",
   },
 ];
-const Products = ({ activeTab }) => {
+const Products = ({ activeTab, query }) => {
+  const filteredProducts = productData.filter((product) => {
+    const matchesTab =
+      activeTab === "all" ? true : product.category === activeTab;
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
   return (
     <>
       <div className="overflow-hidden cursor-pointer">
-        <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-25 overflow-hidden">
-          {activeTab === "all" &&
-            productData.map((product) => (
+        <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 overflow-hidden">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <Product
                 key={product.name}
                 productImg={product.productImg}
@@ -74,35 +82,14 @@ const Products = ({ activeTab }) => {
                 price={product.price}
                 soldOut={product.soldOut}
               />
-            ))}
-          {activeTab === "main" &&
-            productData
-              .filter((product) => product.category === "main")
-              .map((product) => (
-                <Product
-                  key={product.name}
-                  productImg={product.productImg}
-                  name={product.name}
-                  description={product.description}
-                  price={product.price}
-                  soldOut={product.soldOut}
-                />
-              ))}
-          {activeTab === "salad" &&
-            productData
-              .filter((product) => product.category === "salad")
-              .map((product) => (
-                <Product
-                  key={product.name}
-                  productImg={product.productImg}
-                  name={product.name}
-                  description={product.description}
-                  price={product.price}
-                  soldOut={product.soldOut}
-                />
-              ))}
+            ))
+          ) : (
+            <p className="col-span-full text-center  mt-[100px] py-6 bg-gray-100 shadow-xl text-gray-500">
+              No products found
+            </p>
+          )}
         </ul>
-        ;
+        
       </div>
     </>
   );

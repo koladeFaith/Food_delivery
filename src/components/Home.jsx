@@ -11,6 +11,12 @@ import Auth from "../pages/Auth";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const handleSearch = () => {
+    console.log("Searching for:", query);
+    // You can later call your API here instead of just filtering locally
+  };
   return (
     <>
       <div
@@ -58,7 +64,7 @@ const Home = () => {
             </div>
             <button className="rounded-lg text-[#ffff] bg-[#2ec2b2] px-7 py-3 mt-2 flex gap-3 items-center cursor-pointer ">
               <FaPhoneAlt />
-              Call to order: +234 222 3333 444
+              Call to order: +234 222 3333
             </button>
           </div>
         </div>
@@ -66,10 +72,15 @@ const Home = () => {
         <div className=" flex justify-center items-center ">
           {" "}
           <div className="relative mt-[90px] md:mt-[150px]   w-full max-w-sm md:max-w-md ">
-            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <FaSearch
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"
+              onClick={handleSearch}
+            />
             <input
               type="text"
               placeholder="Search new menu..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="w-full pl-10 pr-4 px-10 py-1 md:py-2 rounded-lg border text-[15px] border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f54926]"
             />
           </div>
@@ -95,14 +106,14 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div>
-          <Products activeTab={activeTab} />
+        <div className="">
+          <Products activeTab={activeTab} query={query} />
         </div>
 
         <div className="   text-white py-4  fixed bottom-0 right-0 mr-5  flex justify-center items-center  rounded-full bg-[#f56a27]  w-[50px] ">
           <FiShoppingCart className="text-xl  text-white w-[20px]" />
         </div>
-        {open && <Auth />}
+        {open && <Auth setOpen={setOpen} />}
       </div>
     </>
   );

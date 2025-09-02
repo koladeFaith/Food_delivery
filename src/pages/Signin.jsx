@@ -4,7 +4,9 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 const Signin = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +33,9 @@ const Signin = () => {
         toast.success(response.data.message);
         console.log(response.data.message);
         resetForm();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } catch (error) {
         if (
           error.response &&
@@ -49,9 +54,9 @@ const Signin = () => {
   console.log(formik.touched);
   return (
     <>
-      <div>
+      <form onSubmit={formik.handleSubmit}>
         {" "}
-        <div className="flex flex-col mb-5 mt-4 gap-1">
+        <div className="flex flex-col mb-3 mt-4 gap-1">
           <label htmlFor="" className="text-[14px]">
             Email
           </label>
@@ -64,13 +69,16 @@ const Signin = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+          {formik.touched.email && formik.errors.email && (
+            <p className="text-red-500 text-sm">{formik.errors.email}</p>
+          )}
         </div>{" "}
-        <div className="flex flex-col mb-5 gap-1">
+        <div className="flex flex-col mb-3 gap-1">
           <label htmlFor="" className="text-[14px]">
             Password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="Create a password"
             className="border border-[#e9e8e7] rounded-lg w-full text-[13px] py-2 px-2 focus:outline-none focus:border-[#fd6513]"
             name="password"
@@ -78,6 +86,9 @@ const Signin = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+          {formik.touched.password && formik.errors.password && (
+            <p className="text-red-500 text-sm">{formik.errors.password}</p>
+          )}
         </div>
         <div className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center">
           {" "}
@@ -86,7 +97,7 @@ const Signin = () => {
             Login
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -37,10 +37,9 @@ import React from "react";
 import Home from "./components/Home";
 import { Route, Routes } from "react-router-dom";
 import Products from "./components/Products";
-import Signup from "./pages/Signup";
-import Signin from "./pages/Signin";
 import Dashboard from "./pages/Auth";
 import { Toaster } from "sonner";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
@@ -48,9 +47,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />{" "}
-        <Route path="/signup" element={<Signup />} />{" "}
+        {/* <Route path="/signup" element={<Signup />} />{" "} */}
         {/* <Route path="/login" element={<Signin />} />{" "} */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Toaster richColors position="top-center" />
     </>

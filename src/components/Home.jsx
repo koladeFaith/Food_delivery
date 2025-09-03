@@ -7,15 +7,16 @@ import { FaStar } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
 import Products from "./Products";
 import Auth from "../pages/Auth";
-
+import Cart from "./Cart";
+import { useCart } from "./CartContext";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-
+  const { cart, isCartOpen, addToCart, removeFromCart, openCart, closeCart } =
+    useCart();
   const handleSearch = () => {
     console.log("Searching for:", query);
-    // You can later call your API here instead of just filtering locally
   };
   return (
     <>
@@ -110,10 +111,24 @@ const Home = () => {
           <Products activeTab={activeTab} query={query} />
         </div>
 
-        <div className="   text-white py-4  fixed bottom-0 right-0 mr-5  flex justify-center items-center  rounded-full bg-[#f56a27]  w-[50px] ">
-          <FiShoppingCart className="text-xl  text-white w-[20px]" />
+        <div
+          className="text-white py-4 fixed bottom-0 right-0 mr-5 flex justify-center items-center rounded-full bg-[#f56a27] w-[50px] cursor-pointer"
+          onClick={openCart}>
+          <FiShoppingCart className="text-xl text-white w-[20px]" />
+          {cart.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+              {cart.reduce((total, item) => total + item.quantity, 0)}
+            </span>
+          )}
         </div>
         {open && <Auth setOpen={setOpen} />}
+        <Cart
+          cart={cart}
+          isOpen={isCartOpen}
+          onClose={closeCart}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+        />
       </div>
     </>
   );

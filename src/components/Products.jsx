@@ -73,7 +73,7 @@ const Products = ({ activeTab, query, }) => {
   return (
     <>
       <div className="overflow-hidden cursor-pointer">
-        <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 overflow-hidden">
+        <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-30 overflow-hidden">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
               <Product

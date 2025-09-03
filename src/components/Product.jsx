@@ -25,21 +25,19 @@ const Product = ({
           <p className="text-[#8a827d] text-[12px] leading-4">{description}</p>
           <div className="py-5 flex justify-between  items-center`">
             {" "}
-            <p className="text-[#df6d52] font-extrabold text-[20px]">
-              ${price}
-            </p>
+            <p className="text-red-500 font-extrabold text-[20px]">${price}</p>
             {!soldOut && (
-              <div className="mt-3 flex items-center gap-2">
+              <div className=" flex items-center gap-2">
                 {cartItem ? (
                   <div className="flex items-center gap-2">
                     <button
-                      className="px-2 py-1 bg-red-500 text-white rounded"
+                      className="px-2 py-1 shadow-sm bg-white text-black font-extrabold rounded"
                       onClick={() => removeFromCart({ name })}>
                       -
                     </button>
                     <span>{cartItem.quantity}</span>
                     <button
-                      className="px-2 py-1 bg-green-500 text-white rounded"
+                      className="px-2 py-1 bg-[#54bca2] text-white rounded"
                       onClick={() =>
                         addToCart({ name, productImg, description, price })
                       }>
@@ -48,7 +46,7 @@ const Product = ({
                   </div>
                 ) : (
                   <button
-                    className="px-3 py-1 bg-green-500 text-white rounded"
+                    className="px-3 py-1 bg-[#f76d22] text-white rounded"
                     onClick={() =>
                       addToCart({ name, productImg, description, price })
                     }>

@@ -59,7 +59,7 @@ const productData = [
     category: "salad",
   },
 ];
-const Products = ({ activeTab, query }) => {
+const Products = ({ activeTab, query, addToCart, removeFromCart,cart }) => {
   const filteredProducts = productData.filter((product) => {
     const matchesTab =
       activeTab === "all" ? true : product.category === activeTab;
@@ -81,6 +81,9 @@ const Products = ({ activeTab, query }) => {
                 description={product.description}
                 price={product.price}
                 soldOut={product.soldOut}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+                cartItem={cart.find((item) => item.name === product.name)}
               />
             ))
           ) : (
@@ -89,7 +92,6 @@ const Products = ({ activeTab, query }) => {
             </p>
           )}
         </ul>
-        
       </div>
     </>
   );

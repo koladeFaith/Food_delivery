@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Trash2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 const Cart = ({ cart, isOpen, onClose, addToCart, removeFromCart }) => {
@@ -15,15 +15,20 @@ const Cart = ({ cart, isOpen, onClose, addToCart, removeFromCart }) => {
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "hidden"; 
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "unset"; 
+      document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
-
+  const deleteFromCart = (product) => {
+    let quantityToRemove = product.quantity;
+    for (let i = 0; i < quantityToRemove; i++) {
+      removeFromCart(product);
+    }
+  };
   return (
     <>
       {/* Blur overlay */}
@@ -38,7 +43,7 @@ const Cart = ({ cart, isOpen, onClose, addToCart, removeFromCart }) => {
       <div
         ref={cartRef}
         className={`fixed top-0 right-0 h-full w-full md:w-[400px] lg:w-[450px] bg-white shadow-lg p-4 transform transition-transform duration-300 z-50
-          ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+          ${isOpen ? "translate-x-0" : "translate-x-full"} cursor-pointer`}>
         {/* Header */}
         <div className="flex justify-between items-center pb-2 mb-4">
           <h2 className="text-lg font-semibold text-[20px] md:text-[25px]">
@@ -74,15 +79,21 @@ const Cart = ({ cart, isOpen, onClose, addToCart, removeFromCart }) => {
                 </div>
                 <div className="flex items-center gap-4 text-[18px]">
                   <button
-                    className="px-2 py-1 shadow-sm bg-white text-black rounded"
+                    className="px-2 py-1 shadow-sm bg-white cursor-pointer text-black rounded"
                     onClick={() => removeFromCart(item)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    className="px-2 py-1 bg-[#54bca2] text-white rounded"
+                    className="px-2 py-1 bg-[#54bca2] cursor-pointer text-white rounded"
                     onClick={() => addToCart(item)}>
                     +
+                  </button>
+                  <button
+                    className="px-2 py-2 bg-red-500 cursor-pointer rounded text-white transition-colors"
+                    onClick={() => deleteFromCart(item)}
+                    title="Remove item">
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </li>
@@ -98,7 +109,7 @@ const Cart = ({ cart, isOpen, onClose, addToCart, removeFromCart }) => {
               ${total.toFixed(2)}
             </p>
           </div>
-          <button className="w-full mt-5 bg-[#f76d22] text-white py-3 rounded">
+          <button className="w-full mt-5 bg-[#f76d22] text-white py-3 rounded cursor-pointer">
             Checkout
           </button>
         </div>

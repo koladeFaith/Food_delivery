@@ -31,13 +31,13 @@ const Product = ({
                 {cartItem ? (
                   <div className="flex items-center gap-2">
                     <button
-                      className="px-2 py-1 shadow-sm bg-white text-black font-extrabold rounded"
+                      className="px-2 py-1 shadow-sm cursor-pointer bg-white text-black font-extrabold rounded"
                       onClick={() => removeFromCart({ name })}>
                       -
                     </button>
                     <span>{cartItem.quantity}</span>
                     <button
-                      className="px-2 py-1 bg-[#54bca2] text-white rounded"
+                      className="px-2 py-1 bg-[#54bca2] cursor-pointer text-white rounded"
                       onClick={() =>
                         addToCart({ name, productImg, description, price })
                       }>
@@ -46,7 +46,7 @@ const Product = ({
                   </div>
                 ) : (
                   <button
-                    className="px-3 py-1 bg-[#f76d22] text-white rounded"
+                    className="px-3 py-1 bg-[#f76d22] cursor-pointer text-white rounded"
                     onClick={() =>
                       addToCart({ name, productImg, description, price })
                     }>

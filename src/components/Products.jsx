@@ -15,16 +15,16 @@ const productData = [
     category: "main",
   },
   {
-    productImg: product2,
+    productImg: product3,
     name: "Caesar Salad",
     description:
       "Crisp romaine lettuce with grilled chicken, croutons, and parmesan cheese",
     price: 12.99,
     soldOut: false,
-    category: "main",
+    category: "salad",
   },
   {
-    productImg: product3,
+    productImg: product4,
     name: "Margherita Pizza",
     description:
       "Fresh mozzarella, tomato sauce, and basil on our hand-tossed dough",
@@ -42,8 +42,35 @@ const productData = [
     category: "main",
   },
   {
-    productImg: product4,
-    name: "Bacon Cheeseburgerss",
+    productImg: product3,
+    name: "Barbecue Salads",
+    description:
+      "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
+    price: 15.99,
+    soldOut: false,
+    category: "salad",
+  },
+  {
+    productImg: product3,
+    name: "Chader Salads",
+    description:
+      "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
+    price: 15.99,
+    soldOut: false,
+    category: "salad",
+  },
+  {
+    productImg: product2,
+    name: "Cheeseburgerrr Salads",
+    description:
+      "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
+    price: 15.99,
+    soldOut: false,
+    category: "salad",
+  },
+  {
+    productImg: product3,
+    name: "Bacon Salads",
     description:
       "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
     price: 15.99,
@@ -52,7 +79,7 @@ const productData = [
   },
   {
     productImg: product4,
-    name: "Bacon Cheeseburgerrr",
+    name: "Cripsy Pizza",
     description:
       "Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce",
     price: 15.99,

@@ -86,13 +86,13 @@ const Signin = ({ onSuccess }) => {
             <p className="text-red-500 text-sm">{formik.errors.password}</p>
           )}
         </div>
-        <div className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center">
+        <button
+          className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center cursor-pointer"
+          type="submit">
           {/* Replace with your icon or remove if not available */}
           <span className="text-white">→</span>
-          <button className="text-white text-[14px]" type="submit">
-            Login
-          </button>
-        </div>
+          <span className="text-white text-[14px]">Login</span>
+        </button>
       </form>
     </>
   );

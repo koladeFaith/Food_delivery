@@ -105,12 +105,12 @@ const Signup = ({ onSuccess }) => {
             <p className="text-red-500 text-[12px]">{formik.errors.password}</p>
           )}
         </div>
-        <div className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center">
+        <button
+          className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center cursor-pointer"
+          type="submit ">
           <FiUser className="" />
-          <button className="text-white" type="submit">
-            Sign Up
-          </button>
-        </div>
+          <span className="text-white">Sign Up</span>
+        </button>
       </form>
     </>
   );

@@ -27,11 +27,11 @@ const Product = ({
 
   return (
     <>
-      <li className=" my-5 hover:transition-transform hover:duration-100 hover:ease-in-out hover:scale-105 border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
+      <li className=" my-5 hover:transition-transform  overflow-hidden border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
         <img
           src={productImg}
           alt=""
-          className="w-full object-cover rounded-t-xl "
+          className="w-full object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
         />
         <div className="mx-4">
           <h2 className="text-[#292523] font-bold pt-4 pb-3">

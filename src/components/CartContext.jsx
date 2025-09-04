@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { CartContext } from "./CartContext.js";
 
 export const CartProvider = ({ children }) => {
@@ -37,13 +38,15 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const openCart = () => setIsCartOpen(true);
-  const closeCart = () => setIsCartOpen(false);
   const deleteFromCart = (product) => {
     setCart((prevCart) =>
       prevCart.filter((item) => item.name !== product.name)
     );
   };
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
   const value = {
     cart,
     isCartOpen,
@@ -52,6 +55,7 @@ export const CartProvider = ({ children }) => {
     deleteFromCart,
     openCart,
     closeCart,
+    setCart, 
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

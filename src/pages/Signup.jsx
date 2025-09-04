@@ -1,12 +1,15 @@
 import React from "react";
 import { FiUser } from "react-icons/fi";
-import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import {  useNavigate } from "react-router-dom";
-const Signup = () => {
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/useUser"; // Import the hook
+
+const Signup = ({ onSuccess }) => {
   const navigate = useNavigate();
+  const { register } = useUser(); // Get register function from context
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -20,41 +23,34 @@ const Signup = () => {
         .email("Invalid Email"),
       password: Yup.string()
         .required("Password is required")
-        .min(6, "Paswword must be 6 characters or more"),
+        .min(6, "Password must be 6 characters or more"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post(
-          "https://food-delivery-backend-n6at.onrender.com/user/signup",
-          values,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+        const result = await register(
+          values.fullName,
+          values.email,
+          values.password
         );
 
-        toast.success(response.data.message);
+        if (result.success) {
+          toast.success("Account created successfully!");
+          resetForm();
 
-        console.log(response.data.message);
-        resetForm();
-        setTimeout(() => {
+          if (onSuccess) {
+            onSuccess();
+          }
+
           navigate("/");
-        }, 1000);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          console.error("Error: " + error.response.data.message);
-          toast.error(error.response.data.message);
         } else {
-          console.error("An unexpected error occurred: " + error.message);
-          toast.error(error.message);
+          toast.error(result.message);
         }
+      } catch (error) {
+        console.log(error);
       }
     },
   });
-  console.log(formik.touched);
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -74,7 +70,7 @@ const Signup = () => {
           {formik.touched.fullName && formik.errors.fullName && (
             <p className="text-red-500 text-[12px]">{formik.errors.fullName}</p>
           )}
-        </div>{" "}
+        </div>
         <div className="flex flex-col mb-3 gap-1">
           <label htmlFor="" className="text-[14px]">
             Email
@@ -91,7 +87,7 @@ const Signup = () => {
           {formik.touched.email && formik.errors.email && (
             <p className="text-red-500 text-[12px]">{formik.errors.email}</p>
           )}
-        </div>{" "}
+        </div>
         <div className="flex flex-col mb-3 gap-1">
           <label htmlFor="" className="text-[14px]">
             Password
@@ -110,9 +106,8 @@ const Signup = () => {
           )}
         </div>
         <div className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center">
-          {" "}
           <FiUser className="" />
-          <button className=" text-white" type="submit">
+          <button className="text-white" type="submit">
             Sign Up
           </button>
         </div>

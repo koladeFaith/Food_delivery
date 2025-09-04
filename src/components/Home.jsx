@@ -9,9 +9,13 @@ import Products from "./Products";
 import Auth from "../pages/Auth";
 import Cart from "./Cart";
 import { useCart } from "./useCart";
+import { useUser } from "../contexts/useUser";
+import UserProfile from "../components/UserProfile";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [open, setOpen] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const { user } = useUser();
   const [query, setQuery] = useState("");
   const { cart, isCartOpen, addToCart, removeFromCart, openCart, closeCart } =
     useCart();
@@ -25,14 +29,25 @@ const Home = () => {
         style={{ backgroundImage: `url(${img})` }}>
         <div className="absolute  inset-0 bg-[#f54926]/85"></div>
         <div className="relative z-10 ">
-          <div className="flex  justify-end align-items-end">
-            {" "}
-            <button
-              className="bg-[#f6672c] mt-5 px-4  text-[#fff1ba] py-1 rounded-lg cursor-pointer fixed  right-5 shadow-lg flex gap-2 justify-center  items-center"
-              onClick={() => setOpen(true)}>
-              <FiUser />
-              Login
-            </button>
+          <div className="flex justify-end align-items-end">
+            {user ? (
+              <button
+                className="bg-[#f6672c] mt-5 px-4 text-[#fff1ba] py-1 rounded-lg cursor-pointer fixed right-5 shadow-lg flex gap-2 justify-center items-center"
+                onClick={() => setShowProfile(true)}>
+                <FiUser />
+                Logout
+              </button>
+            ) : (
+              <button
+                className="bg-[#f6672c] mt-5 px-4 text-[#fff1ba] py-1 rounded-lg cursor-pointer fixed right-5 shadow-lg flex gap-2 justify-center items-center"
+                onClick={() => setOpen(true)}>
+                <FiUser />
+                Login
+              </button>
+            )}
+            {showProfile && (
+              <UserProfile onClose={() => setShowProfile(false)} />
+            )}
           </div>
           <div className=" pt-15 md:pt-18 pl-5 md:pl-10  lg:pl-30 text-white">
             <h1 className="text-[45px] leading-10  font-bold">

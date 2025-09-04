@@ -40,8 +40,10 @@ import Products from "./components/Products";
 import Dashboard from "./pages/Auth";
 import { Toaster } from "sonner";
 import Cart from "./components/Cart";
+import CartPersistence from "./components/CartPersistence.jsx";
 
 const App = () => {
+  CartPersistence();
   return (
     <>
       <Routes>

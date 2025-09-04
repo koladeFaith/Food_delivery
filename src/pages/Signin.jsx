@@ -1,12 +1,15 @@
 import React from "react";
-import login from "../images/login.svg";
-import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-const Signin = () => {
+import { useUser } from "../contexts/useUser";
+
+const Signin = ({ onSuccess }) => {
+  // Add onSuccess prop
   const navigate = useNavigate();
+  const { login } = useUser();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,44 +21,37 @@ const Signin = () => {
         .email("Invalid Email"),
       password: Yup.string()
         .required("Password is required")
-        .min(6, "Paswword must be 6 characters or more"),
+        .min(6, "Password must be 6 characters or more"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post(
-          "https://food-delivery-backend-n6at.onrender.com/user/signin",
-          values,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        const result = await login(values.email, values.password);
+        console.log("Login result:", result);
 
-        toast.success(response.data.message);
-        console.log(response.data.message);
-        resetForm();
-        setTimeout(() => {
+        if (result.success) {
+          toast.success("Login successful!");
+          resetForm();
+
+          // Call onSuccess callback if provided (to close modal)
+          if (onSuccess) {
+            onSuccess();
+          }
+
+          // Navigate to home
           navigate("/");
-        }, 1000);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          console.error("Error: " + error.response.data.message);
-          toast.error(error.response.data.message);
         } else {
-          console.error("An unexpected error occurred: " + error.message);
-          toast.error(error.message);
+          toast.error(result.message || "Login failed. Please try again.");
         }
+      } catch (error) {
+        console.error("Login error:", error);
+        toast.error("An unexpected error occurred");
       }
     },
   });
-  console.log(formik.touched);
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        {" "}
         <div className="flex flex-col mb-3 mt-4 gap-1">
           <label htmlFor="" className="text-[14px]">
             Email
@@ -72,14 +68,14 @@ const Signin = () => {
           {formik.touched.email && formik.errors.email && (
             <p className="text-red-500 text-sm">{formik.errors.email}</p>
           )}
-        </div>{" "}
+        </div>
         <div className="flex flex-col mb-3 gap-1">
           <label htmlFor="" className="text-[14px]">
             Password
           </label>
           <input
             type="password"
-            placeholder="Create a password"
+            placeholder="Enter your password"
             className="border border-[#e9e8e7] rounded-lg w-full text-[13px] py-2 px-2 focus:outline-none focus:border-[#fd6513]"
             name="password"
             value={formik.values.password}
@@ -91,9 +87,9 @@ const Signin = () => {
           )}
         </div>
         <div className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center">
-          {" "}
-          <img src={login} className="text-white" width={17} alt="" />
-          <button className=" text-white text-[14px]" type="submit">
+          {/* Replace with your icon or remove if not available */}
+          <span className="text-white">→</span>
+          <button className="text-white text-[14px]" type="submit">
             Login
           </button>
         </div>

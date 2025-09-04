@@ -32,6 +32,7 @@ const Product = ({
           src={productImg}
           alt=""
           width={300}
+          height={150}
           className="w-full object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
         />
         <div className="mx-4">

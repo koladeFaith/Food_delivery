@@ -3,7 +3,7 @@ import product2 from "../images/imgi_2_burger-CybveqoP.jpg";
 import product3 from "../images/imgi_3_salad-DtQo6JXa.jpg";
 import product4 from "../images/imgi_4_pizza-D_mYsoi4.jpg";
 import Product from "./Product";
-import { useCart } from "./CartContext";
+import { useCart } from "./useCart";
 const productData = [
   {
     productImg: product2,
@@ -60,7 +60,7 @@ const productData = [
     category: "salad",
   },
 ];
-const Products = ({ activeTab, query, }) => {
+const Products = ({ activeTab, query }) => {
   const { cart, addToCart, removeFromCart } = useCart();
   const filteredProducts = productData.filter((product) => {
     const matchesTab =

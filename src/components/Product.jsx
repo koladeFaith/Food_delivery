@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "sonner";
 
 const Product = ({
   productImg,
@@ -10,6 +11,20 @@ const Product = ({
   removeFromCart,
   cartItem,
 }) => {
+  // Add toast when adding to cart
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    toast.success(`Added ${name} to cart`);
+  };
+
+  // Add toast when removing from cart (only when quantity reaches 0)
+  const handleRemoveFromCart = (product) => {
+    removeFromCart(product);
+    if (cartItem && cartItem.quantity === 1) {
+      toast.info(`Removed ${name} from cart`);
+    }
+  };
+
   return (
     <>
       <li className=" my-5 hover:transition-transform hover:duration-100 hover:ease-in-out hover:scale-105 border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
@@ -32,14 +47,19 @@ const Product = ({
                   <div className="flex items-center gap-2">
                     <button
                       className="px-2 py-1 shadow-sm cursor-pointer bg-white text-black font-extrabold rounded"
-                      onClick={() => removeFromCart({ name })}>
+                      onClick={() => handleRemoveFromCart({ name })}>
                       -
                     </button>
                     <span>{cartItem.quantity}</span>
                     <button
                       className="px-2 py-1 bg-[#54bca2] cursor-pointer text-white rounded"
                       onClick={() =>
-                        addToCart({ name, productImg, description, price })
+                        handleAddToCart({
+                          name,
+                          productImg,
+                          description,
+                          price,
+                        })
                       }>
                       +
                     </button>
@@ -48,7 +68,7 @@ const Product = ({
                   <button
                     className="px-3 py-1 bg-[#f76d22] cursor-pointer text-white rounded"
                     onClick={() =>
-                      addToCart({ name, productImg, description, price })
+                      handleAddToCart({ name, productImg, description, price })
                     }>
                     +
                   </button>

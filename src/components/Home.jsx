@@ -8,7 +8,7 @@ import { FiClock } from "react-icons/fi";
 import Products from "./Products";
 import Auth from "../pages/Auth";
 import Cart from "./Cart";
-import { useCart } from "./CartContext";
+import { useCart } from "./useCart";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [open, setOpen] = useState(false);

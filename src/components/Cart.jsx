@@ -89,7 +89,8 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
       <div
         ref={cartRef}
         dir={direction}
-        className={`fixed top-0 ${cartPositionClass} h-full w-full md:w-[400px] lg:w-[450px] bg-white shadow-lg p-4 z-50 ${cartTransformClass}`}>
+        className={`fixed top-0 ${cartPositionClass} h-full w-full md:w-[400px] lg:w-[450px] bg-white shadow-lg p-4 z-50 ${cartTransformClass} flex flex-col`} // Added: flex flex-col
+      >
         {/* Header */}
         <div
           className={`flex justify-between items-center pb-2 mb-4 ${headerClass}`}>
@@ -100,61 +101,64 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
             <X className="w-6 h-6" />
           </button>
         </div>
-
-        {/* Items */}
-        {cart.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">Your cart is empty</p>
-        ) : (
-          <ul className="space-y-2">
-            {cart.map((item) => (
-              <li
-                key={item.name}
-                className={`flex justify-between items-center rounded-lg bg-[#fbfbfa] py-5 border-b border-b-gray-300 ${itemLayoutClass}`}>
-                <div className="flex items-center gap-4">
-                  <img
-                    src={item.productImg}
-                    width={70}
-                    alt={item.name}
-                    className="rounded-lg"
-                  />
-                  <div>
-                    <p className="text-[16px]">{item.name}</p>
-                    <p className="text-red-500 font-extrabold text-[14px]">
-                      ${item.price}
-                    </p>
+        {/* Items Container - Made scrollable */}
+        <div className="flex-1 overflow-y-auto">
+          {" "}
+          {/* Added: This div enables scrolling */}
+          {cart.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">Your cart is empty</p>
+          ) : (
+            <ul className="space-y-2">
+              {cart.map((item) => (
+                <li
+                  key={item.name}
+                  className={`flex justify-between items-center rounded-lg bg-[#fbfbfa] py-5 border-b border-b-gray-300 ${itemLayoutClass}`}>
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={item.productImg}
+                      width={70}
+                      alt={item.name}
+                      className="rounded-lg"
+                    />
+                    <div>
+                      <p className="text-[16px]">{item.name}</p>
+                      <p className="text-red-500 font-extrabold text-[14px]">
+                        ${item.price}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <div className={`flex flex-col gap-2 ${controlsClass}`}>
-                  {/* Quantity controls */}
-                  <div className="flex items-center gap-4 text-[18px]">
-                    <button
-                      className="px-2 py-1 shadow-sm bg-white text-black rounded"
-                      onClick={() => handleRemoveFromCart(item)}>
-                      -
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button
-                      className="px-2 py-1 bg-[#54bca2] text-white rounded"
-                      onClick={() => handleAddToCart(item)}>
-                      +
-                    </button>
-                    {/* Delete button */}
-                    <button
-                      className="px-2 py-2 bg-red-500 text-white rounded hover:text-red-500 transition-colors"
-                      onClick={() => handleDeleteFromCart(item)}
-                      title="Remove item">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                  <div className={`flex flex-col gap-2 ${controlsClass}`}>
+                    {/* Quantity controls */}
+                    <div className="flex items-center gap-3 text-[18px]">
+                      <button
+                        className="px-2 py-1 shadow-sm bg-white text-black rounded"
+                        onClick={() => handleRemoveFromCart(item)}>
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        className="px-2 py-1 bg-[#54bca2] text-white rounded"
+                        onClick={() => handleAddToCart(item)}>
+                        +
+                      </button>
+                      {/* Delete button */}
+                      <button
+                        className="px-2 py-2 bg-red-500 hover:bg-red-400 text-white rounded transition-colors"
+                        onClick={() => handleDeleteFromCart(item)}
+                        title="Remove item">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>{" "}
+        {/* End of scrollable container */}
         {/* Footer */}
-        <div className="mt-6 pt-4">
+        <div className="mt-6 py-6">
           <div className={`flex justify-between items-center ${totalClass}`}>
             <p className="text-lg md:text-[20px]">Total:</p>
             <p className="text-lg md:text-[23px] text-red-500 font-bold">

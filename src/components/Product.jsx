@@ -28,13 +28,16 @@ const Product = ({
   return (
     <>
       <li className=" my-5 hover:transition-transform  overflow-hidden border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
-        <img
-          src={productImg}
-          alt=""
-          width={300}
-          height={150}
-          className="w-full object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
-        />
+        <div className="max-w-lg max-h-lg">
+          {" "}
+          <img
+            src={productImg}
+            alt=""
+            width={300}
+            height={150}
+            className="w-full object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
+          />
+        </div>
         <div className="mx-4">
           <h2 className="text-[#292523] font-bold pt-4 pb-3">
             {name || "jrrr"}

@@ -1,42 +1,67 @@
 import React, { useState } from "react";
 import { X, CreditCard, MapPin, User, Mail, Phone } from "lucide-react";
 import { toast } from "sonner";
+import * as Yup from "yup"; // Import Yup
+import { useFormik } from "formik"; // Import useFormik
 
 const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    zipCode: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-  });
-
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Yup validation schema
+  const validationSchema = Yup.object({
+    fullName: Yup.string().required("Full Name is required"),
+    email: Yup.string()
+      .required("Email Address is required")
+      .email("Invalid Email"),
+    phone: Yup.string()
+      .required("Phone Number is required")
+      .matches(/^[0-9]+$/, "Phone number must contain only numbers")
+      .min(10, "Phone number must be at least 10 digits"),
+    address: Yup.string().required("Address is required"),
+    city: Yup.string().required("City is required"),
+    zipCode: Yup.string()
+      .required("ZIP Code is required")
+      .matches(/^[0-9]+$/, "ZIP code must contain only numbers"),
+    cardNumber: Yup.string()
+      .required("Card Number is required")
+      .matches(/^[0-9\s]+$/, "Card number must contain only numbers and spaces")
+      .min(16, "Card number must be at least 16 digits"),
+    expiryDate: Yup.string()
+      .required("Expiry Date is required")
+      .matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, "Format must be MM/YY"),
+    cvv: Yup.string()
+      .required("CVV is required")
+      .matches(/^[0-9]+$/, "CVV must contain only numbers")
+      .min(3, "CVV must be at least 3 digits")
+      .max(4, "CVV must be at most 4 digits"),
+  });
+
+  // Formik setup
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      setIsProcessing(true);
+      // Simulate payment processing
+      setTimeout(() => {
+        setIsProcessing(false);
+        toast.success("Order placed successfully!");
+        onClose();
+      }, 2000);
+    },
+  });
+
   if (!isOpen) return null;
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsProcessing(true);
-
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      toast.success("Order placed successfully!");
-      onClose();
-    }, 2000);
-  };
 
   return (
     <>
@@ -48,11 +73,14 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
 
       {/* Checkout Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-center p-6 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-800">Checkout</h2>
             <button
+              type="button"
               onClick={onClose}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors">
               <X className="w-6 h-6" />
@@ -60,10 +88,10 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column - Order Summary */}
-              <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">
                   Order Summary
                 </h3>
@@ -72,7 +100,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                     <div
                       key={item.name}
                       className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2">
                         <img
                           src={item.productImg}
                           alt={item.name}
@@ -120,11 +148,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="fullName"
-                        value={formData.fullName}
-                        onChange={handleInputChange}
+                        value={formik.values.fullName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.fullName && formik.errors.fullName && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.fullName}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -133,11 +166,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="email"
                         name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.email && formik.errors.email && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.email}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -146,11 +184,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="tel"
                         name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
+                        value={formik.values.phone}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.phone && formik.errors.phone && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.phone}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -169,11 +212,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
+                        value={formik.values.address}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.address && formik.errors.address && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.address}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -182,11 +230,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
+                        value={formik.values.city}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.city && formik.errors.city && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.city}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -195,11 +248,16 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="zipCode"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
+                        value={formik.values.zipCode}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.zipCode && formik.errors.zipCode && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.zipCode}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -218,12 +276,18 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
+                        value={formik.values.cardNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         placeholder="1234 5678 9012 3456"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.cardNumber &&
+                        formik.errors.cardNumber && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formik.errors.cardNumber}
+                          </p>
+                        )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -232,12 +296,18 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="expiryDate"
-                        value={formData.expiryDate}
-                        onChange={handleInputChange}
+                        value={formik.values.expiryDate}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         placeholder="MM/YY"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.expiryDate &&
+                        formik.errors.expiryDate && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formik.errors.expiryDate}
+                          </p>
+                        )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -246,12 +316,17 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
                       <input
                         type="text"
                         name="cvv"
-                        value={formData.cvv}
-                        onChange={handleInputChange}
+                        value={formik.values.cvv}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         placeholder="123"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
                       />
+                      {formik.touched.cvv && formik.errors.cvv && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formik.errors.cvv}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -262,7 +337,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
           {/* Footer */}
           <div className="p-6 border-t border-gray-200 bg-gray-50">
             <button
-              onClick={handleSubmit}
+              type="submit"
               disabled={isProcessing || cart.length === 0}
               className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center">
               {isProcessing ? (
@@ -275,7 +350,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
               )}
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

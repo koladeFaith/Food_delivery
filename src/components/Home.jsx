@@ -49,7 +49,7 @@ const Home = () => {
               <UserProfile onClose={() => setShowProfile(false)} />
             )}
           </div>
-          <div className=" pt-15 md:pt-18 pl-5 md:pl-10  lg:pl-30 text-white">
+          <div className=" pt-15 md:pt-18 px-4 md:pl-10  lg:pl-30 text-white">
             <h1 className="text-[45px] leading-10  font-bold">
               {" "}
               Delicious Food Delivered
@@ -78,16 +78,16 @@ const Home = () => {
                 <p className="text-[#ffd3c5] font-medium">4.9 rating</p>
               </li>
             </div>
-            <button className="rounded-lg text-[#ffff] bg-[#2ec2b2] px-7 py-3 mt-2 flex gap-3 items-center cursor-pointer ">
+            <button className="rounded-lg text-[#ffff] bg-[#2ec2b2] px-5 py-2 mt-2 flex gap-3 items-center cursor-pointer ">
               <FaPhoneAlt />
-              Call to order: +234 222 3333
+              Call to order: 222 3333
             </button>
           </div>
         </div>
         {/* Search */}
-        <div className=" flex justify-center items-center ">
+        <div className=" flex justify-center items-center w-full px-4 md:px-0">
           {" "}
-          <div className="relative mt-[90px] md:mt-[150px]   w-full max-w-sm md:max-w-md ">
+          <div className="relative mt-[110px] md:mt-[150px]   w-full max-w-sm md:max-w-md ">
             <FaSearch
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"
               onClick={handleSearch}
@@ -102,7 +102,7 @@ const Home = () => {
           </div>
         </div>
         {/* Tabs */}
-        <div className="flex justify-center items-center my-5">
+        <div className="flex justify-center items-center my-5 w-full px-4 md:px-0">
           {" "}
           <div className="bg-[#f5f4f2] flex  justify-between items-center px-12 rounded-lg w-full max-w-sm md:max-w-md py-2">
             <button
@@ -122,12 +122,12 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div className="">
+        <div className="py-14 md:py-10">
           <Products activeTab={activeTab} query={query} />
         </div>
 
         <div
-          className="text-white py-4 fixed bottom-0 right-0 mr-5 flex justify-center items-center rounded-full bg-[#f56a27] w-[50px] cursor-pointer"
+          className="text-white py-4 fixed bottom-3 right-0 mr-5 flex justify-center items-center rounded-full bg-[#f56a27] w-[50px] cursor-pointer"
           onClick={openCart}>
           <FiShoppingCart className="text-xl text-white w-[20px]" />
           {cart.length > 0 && (

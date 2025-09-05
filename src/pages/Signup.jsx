@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/useUser"; // Import the hook
+import { useUser } from "../contexts/useUser";
 
 const Signup = ({ onSuccess }) => {
   const navigate = useNavigate();
-  const { register } = useUser(); // Get register function from context
+  const { register } = useUser();
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   const formik = useFormik({
     initialValues: {
@@ -26,6 +27,9 @@ const Signup = ({ onSuccess }) => {
         .min(6, "Password must be 6 characters or more"),
     }),
     onSubmit: async (values, { resetForm }) => {
+      if (isLoading) return; 
+
+      setIsLoading(true); 
       try {
         const result = await register(
           values.fullName,
@@ -47,6 +51,9 @@ const Signup = ({ onSuccess }) => {
         }
       } catch (error) {
         console.log(error);
+        toast.error("An unexpected error occurred");
+      } finally {
+        setIsLoading(false); 
       }
     },
   });
@@ -66,6 +73,7 @@ const Signup = ({ onSuccess }) => {
             value={formik.values.fullName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={isLoading} 
           />
           {formik.touched.fullName && formik.errors.fullName && (
             <p className="text-red-500 text-[12px]">{formik.errors.fullName}</p>
@@ -83,6 +91,7 @@ const Signup = ({ onSuccess }) => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={isLoading} 
           />
           {formik.touched.email && formik.errors.email && (
             <p className="text-red-500 text-[12px]">{formik.errors.email}</p>
@@ -100,16 +109,24 @@ const Signup = ({ onSuccess }) => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={isLoading} 
           />
           {formik.touched.password && formik.errors.password && (
             <p className="text-red-500 text-[12px]">{formik.errors.password}</p>
           )}
         </div>
         <button
-          className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center cursor-pointer"
-          type="submit ">
+          className="bg-[#f66c21] rounded-lg py-2 w-full flex gap-2 justify-center items-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          type="submit"
+          disabled={isLoading} 
+        >
           <FiUser className="" />
-          <span className="text-white">Sign Up</span>
+          <span className="text-white">
+            {isLoading ? "Creating Account..." : "Sign Up"}
+          </span>
+          {isLoading && (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          )}
         </button>
       </form>
     </>

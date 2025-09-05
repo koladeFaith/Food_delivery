@@ -19,8 +19,8 @@ const Auth = ({ setOpen }) => {
 
   return (
     <>
-      <div className="bg-black/50 z-50 fixed top-0 left-0 w-full h-full flex justify-center items-center">
-        <div className="border-[#e63a0faa] bg-white border rounded-lg flex flex-col px-6 w-[450px] h-[460px]">
+      <div className="bg-black/50 z-50 fixed top-0 left-0 w-full h-full flex justify-center items-center ">
+        <div className="border-[#e63a0faa] bg-white border rounded-lg flex flex-col px-10 w-[450px] h-[487px] ">
           <img
             src={backImg}
             alt="Close"
@@ -36,7 +36,7 @@ const Auth = ({ setOpen }) => {
           <div className="flex justify-center items-center my-4">
             <div className="bg-[#f5f4f2] flex justify-between items-center gap-20 px-12 rounded-lg w-full max-w-sm md:max-w-md py-2">
               <button
-                className={`text-[15px] px-10 rounded-lg transition-colors ${
+                className={`text-[15px] px-4 rounded-lg transition-colors ${
                   activeTab === "login"
                     ? "bg-[#ffffff] text-black"
                     : "text-[#9e938e] hover:text-black"
@@ -45,7 +45,7 @@ const Auth = ({ setOpen }) => {
                 Login
               </button>
               <button
-                className={`text-[15px] px-10 rounded-lg transition-colors ${
+                className={`text-[15px] px-4 rounded-lg transition-colors ${
                   activeTab === "signup"
                     ? "bg-[#ffffff] text-black"
                     : "text-[#9e938e] hover:text-black"

@@ -10,46 +10,54 @@ const Signin = ({ onSuccess }) => {
   const { login } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .required("Email Address is required")
-        .email("Invalid Email"),
-      password: Yup.string()
-        .required("Password is required")
-        .min(6, "Password must be 6 characters or more"),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      if (isLoading) return;
+const formik = useFormik({
+  initialValues: {
+    email: "",
+    password: "",
+  },
+  validationSchema: Yup.object({
+    email: Yup.string()
+      .required("Email Address is required")
+      .email("Invalid Email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please enter a valid email address"
+      ),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters")
+      .matches(
+        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
+        "Password contains invalid characters"
+      ),
+  }),
+  onSubmit: async (values, { resetForm }) => {
+    if (isLoading) return;
 
-      setIsLoading(true);
-      try {
-        const result = await login(values.email, values.password);
+    setIsLoading(true);
+    try {
+      const result = await login(values.email, values.password);
 
-        if (result.success) {
-          toast.success("Login successful!");
-          resetForm();
+      if (result.success) {
+        toast.success("Login successful!");
+        resetForm();
 
-          if (onSuccess) {
-            onSuccess();
-          }
-
-          navigate("/");
-        } else {
-          toast.error(result.message || "Login failed. Please try again.");
+        if (onSuccess) {
+          onSuccess();
         }
-      } catch (error) {
-        console.error("Login error:", error);
-        toast.error("An unexpected error occurred");
-      } finally {
-        setIsLoading(false);
+
+        navigate("/");
+      } else {
+        toast.error(result.message || "Login failed. Please try again.");
       }
-    },
-  });
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  },
+});
 
   return (
     <>

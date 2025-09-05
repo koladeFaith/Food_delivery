@@ -11,52 +11,66 @@ const Signup = ({ onSuccess }) => {
   const { register } = useUser();
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      fullName: Yup.string().required("Full Name is required"),
-      email: Yup.string()
-        .required("Email Address is required")
-        .email("Invalid Email"),
-      password: Yup.string()
-        .required("Password is required")
-        .min(6, "Password must be 6 characters or more"),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      if (isLoading) return; 
+const formik = useFormik({
+  initialValues: {
+    fullName: "",
+    email: "",
+    password: "",
+  },
+  validationSchema: Yup.object({
+    fullName: Yup.string()
+      .required("Full Name is required")
+      .matches(
+        /^[a-zA-Z\s]{2,50}$/,
+        "Full Name must be 2-50 characters and contain only letters and spaces"
+      ),
+    email: Yup.string()
+      .required("Email Address is required")
+      .email("Invalid Email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please enter a valid email address"
+      ),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        "Password must contain at least one lowercase letter, one uppercase letter, and one number"
+      )
+      .max(20, "Password must not exceed 20 characters"),
+  }),
+  onSubmit: async (values, { resetForm }) => {
+    if (isLoading) return;
 
-      setIsLoading(true); 
-      try {
-        const result = await register(
-          values.fullName,
-          values.email,
-          values.password
-        );
+    setIsLoading(true);
+    try {
+      const result = await register(
+        values.fullName,
+        values.email,
+        values.password
+      );
 
-        if (result.success) {
-          toast.success("Account created successfully!");
-          resetForm();
+      if (result.success) {
+        toast.success("Account created successfully!");
+        resetForm();
 
-          if (onSuccess) {
-            onSuccess();
-          }
-
-          navigate("/");
-        } else {
-          toast.error(result.message);
+        if (onSuccess) {
+          onSuccess();
         }
-      } catch (error) {
-        console.log(error);
-        toast.error("An unexpected error occurred");
-      } finally {
-        setIsLoading(false); 
+
+        navigate("/");
+      } else {
+        toast.error(result.message);
       }
-    },
-  });
+    } catch (error) {
+      console.log(error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  },
+});
 
   return (
     <>

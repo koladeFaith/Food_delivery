@@ -50,7 +50,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total }) => {
       cvv: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       setIsProcessing(true);
       // Simulate payment processing
       setTimeout(() => {

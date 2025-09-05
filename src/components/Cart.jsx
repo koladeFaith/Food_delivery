@@ -1,12 +1,14 @@
 import { X, Trash2 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "./useCart";
+import CheckoutModal from "./CheckoutModal";
 
 const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
   const { cart, addToCart, removeFromCart, deleteFromCart } = useCart();
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const cartRef = useRef(null);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   // Close cart when clicking outside
   useEffect(() => {
@@ -56,6 +58,17 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
     }
   };
 
+  // Handle checkout button click
+  const handleCheckout = () => {
+    if (cart.length > 0) {
+      setShowCheckout(true);
+    } else {
+      toast.warning("Your cart is empty!", {
+        position: direction === "rtl" ? "top-left" : "top-right",
+      });
+    }
+  };
+
   // Determine direction classes
   const isRTL = direction === "rtl";
   const cartPositionClass = isRTL
@@ -89,8 +102,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
       <div
         ref={cartRef}
         dir={direction}
-        className={`fixed top-0 ${cartPositionClass} h-full w-full md:w-[400px] lg:w-[450px] bg-white shadow-lg p-4 z-50 ${cartTransformClass} flex flex-col`} // Added: flex flex-col
-      >
+        className={`fixed top-0 ${cartPositionClass} h-full w-full md:w-[400px] lg:w-[450px] bg-white shadow-lg p-4 z-50 ${cartTransformClass} flex flex-col`}>
         {/* Header */}
         <div
           className={`flex justify-between items-center pb-2 mb-4 ${headerClass}`}>
@@ -101,10 +113,9 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
             <X className="w-6 h-6" />
           </button>
         </div>
+
         {/* Items Container - Made scrollable */}
         <div className="flex-1 overflow-y-auto">
-          {" "}
-          {/* Added: This div enables scrolling */}
           {cart.length === 0 ? (
             <p className="text-gray-500 text-center py-8">Your cart is empty</p>
           ) : (
@@ -112,7 +123,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
               {cart.map((item) => (
                 <li
                   key={item.name}
-                  className={`flex justify-between items-center rounded-lg bg-[#fbfbfa] py-5 border-b border-b-gray-300 ${itemLayoutClass}`}>
+                  className={`flex justify-between items-center rounded-lg bg-[#fbfbfa] py-5 px-2 border-b border-b-gray-300 ${itemLayoutClass}`}>
                   <div className="flex items-center gap-4">
                     <img
                       src={item.productImg}
@@ -130,7 +141,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
 
                   <div className={`flex flex-col gap-2 ${controlsClass}`}>
                     {/* Quantity controls */}
-                    <div className="flex items-center gap-3 text-[18px]">
+                    <div className="flex items-center gap-4 text-[18px]">
                       <button
                         className="px-2 py-1 shadow-sm bg-white text-black rounded"
                         onClick={() => handleRemoveFromCart(item)}>
@@ -155,8 +166,8 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
               ))}
             </ul>
           )}
-        </div>{" "}
-        {/* End of scrollable container */}
+        </div>
+
         {/* Footer */}
         <div className="mt-6 py-6">
           <div className={`flex justify-between items-center ${totalClass}`}>
@@ -167,21 +178,20 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
           </div>
           <button
             className="w-full mt-5 bg-[#f76d22] text-white py-3 rounded hover:bg-[#e65c1a] transition-colors"
-            onClick={() => {
-              if (cart.length > 0) {
-                toast.success("Order placed successfully!", {
-                  position: isRTL ? "top-left" : "top-right",
-                });
-              } else {
-                toast.warning("Your cart is empty!", {
-                  position: isRTL ? "top-left" : "top-right",
-                });
-              }
-            }}>
+            onClick={handleCheckout} // Updated to use handleCheckout function
+          >
             Checkout
           </button>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={showCheckout}
+        onClose={() => setShowCheckout(false)}
+        cart={cart}
+        total={total}
+      />
     </>
   );
 };

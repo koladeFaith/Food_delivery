@@ -3,8 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "./useCart";
 import CheckoutModal from "./CheckoutModal";
+import { useUser } from "../contexts/useUser";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
+  const navigate = useNavigate();
+  const { user } = useUser();
   const { cart, addToCart, removeFromCart, deleteFromCart } = useCart();
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const cartRef = useRef(null);
@@ -60,12 +64,16 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
 
   // Handle checkout button click
   const handleCheckout = () => {
-    if (cart.length > 0) {
-      setShowCheckout(true);
+    if (!user) {
+      navigate("/");
     } else {
-      toast.warning("Your cart is empty!", {
-        position: direction === "rtl" ? "top-left" : "top-right",
-      });
+      if (cart.length > 0) {
+        setShowCheckout(true);
+      } else {
+        toast.warning("Your cart is empty!", {
+          position: direction === "rtl" ? "top-left" : "top-right",
+        });
+      }
     }
   };
 

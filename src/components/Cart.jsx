@@ -68,7 +68,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
       toast.warning("Login Required!", {
         position: direction === "rtl" ? "top-left" : "top-right",
       });
-      navigate("/");
+      navigate("/login");
     } else {
       if (cart.length > 0) {
         setShowCheckout(true);

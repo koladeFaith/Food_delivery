@@ -41,6 +41,7 @@ import Dashboard from "./pages/Auth";
 import { Toaster } from "sonner";
 import Cart from "./components/Cart";
 import CartPersistence from "./components/CartPersistence.jsx";
+import Auth from "./pages/Auth";
 
 const App = () => {
   CartPersistence();
@@ -48,11 +49,12 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product" element={<Products />} />{" "}
+        {/* <Route path="/product" element={<Products />} />{" "} */}
         {/* <Route path="/signup" element={<Signup />} />{" "} */}
         {/* <Route path="/login" element={<Signin />} />{" "} */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Auth />} />
       </Routes>
       <Toaster richColors position="top-center" />
     </>

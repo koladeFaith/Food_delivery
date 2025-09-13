@@ -65,6 +65,9 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
   // Handle checkout button click
   const handleCheckout = () => {
     if (!user) {
+      toast.warning("Login Required!", {
+        position: direction === "rtl" ? "top-left" : "top-right",
+      });
       navigate("/");
     } else {
       if (cart.length > 0) {

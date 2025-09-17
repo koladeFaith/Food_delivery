@@ -16,7 +16,7 @@ const CartPersistence = () => {
       setCart([]);
     }
   }, [user, setCart]);
-
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, architecto fugit. Tempore, est vitae repellendus, delectus natus quibusdam unde, illum amet iste ea impedit consequatur atque voluptate? Dolor, nostrum velit.
   // Save cart when it changes (only for logged-in users)
   useEffect(() => {
     if (user && cart.length >= 0) {

@@ -203,6 +203,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
         cart={cart}
         total={total}
       />
+      <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem aliquam ea odio, expedita sapiente deleniti assumenda delectus, illo blanditiis voluptates explicabo magnam laborum in voluptatum magni, optio iusto ipsum non.</div>
     </>
   );
 };

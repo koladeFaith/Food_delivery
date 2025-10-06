@@ -207,6 +207,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam ex cum non, eos laudantium recusandae impedit quibusdam facere consequatur! Ex vitae ducimus sint odio odit error nobis perferendis ipsum nihil.
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam in nobis ducimus dignissimos facere veritatis suscipit numquam expedita hic? Dolores aliquam vitae excepturi quas cumque culpa qui mollitia nam blanditiis!
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore saepe architecto, excepturi iusto magnam unde veritatis perferendis quia aliquam sit nam voluptatibus est iste ratione eum iure corrupti laudantium eligendi!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam quia est minus modi iste tempore voluptatem numquam expedita sed ea nisi libero quam in soluta, neque consequuntur. Sint, in suscipit!
       </div>
     </>
   );

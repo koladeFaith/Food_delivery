@@ -178,7 +178,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
             </ul>
           )}
         </div>
-
+<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, incidunt necessitatibus? Quis reiciendis, sapiente, facere, ab harum unde natus eos quas impedit nisi quae? Animi fugit inventore accusamus error ullam!</div>
         {/* Footer */}
         <div className="mt-6 py-6">
           <div className={`flex justify-between items-center ${totalClass}`}>

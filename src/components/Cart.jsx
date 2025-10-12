@@ -192,6 +192,7 @@ const Cart = ({ isOpen, onClose, direction = "ltr" }) => {
           >
             Checkout
           </button>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, sequi et. Perferendis, eligendi quis. Perferendis cupiditate deserunt explicabo in nulla ipsum eligendi ea dignissimos culpa. Laboriosam nisi voluptatibus earum magni.
         </div>
       </div>
 

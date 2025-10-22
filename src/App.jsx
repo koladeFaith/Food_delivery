@@ -41,7 +41,7 @@ import Dashboard from "./pages/Auth";
 import { Toaster } from "sonner";
 import Cart from "./components/Cart";
 import CartPersistence from "./components/CartPersistence.jsx";
-import AdminAddProducts from "./components/AdminAddProducts.jsx";
+import AdminAddProduct from "./components/AdminAddProduct.jsx";
 import Auth from "./pages/Auth";
 
 const App = () => {
@@ -56,7 +56,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Auth />} />
-        <Route path="/admin/add-product" element={<AdminAddProducts />s} />
+        <Route path="/admin/add-product" element={<AdminAddProduct/>} />
       </Routes>
       <Toaster richColors position="top-center" />
     </>

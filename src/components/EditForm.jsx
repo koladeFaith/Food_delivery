@@ -1,17 +1,20 @@
-/* ---------------- EditForm subcomponent ----------------
-   Uses a mini react-hook-form instance to manage the edit form.
-*/
-import {useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 
-function EditForm({ product, onClose, onSubmit, setEditPreview, editPreview }) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
+const PLACEHOLDER =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect fill='#eef2ff' width='800' height='500'/><g font-family='Arial, Helvetica, sans-serif' fill='#c7d2fe' text-anchor='middle'><text x='50%' y='50%' dy='.3em' font-size='28'>No image</text></g></svg>`
+  );
+
+export default function EditForm({
+  product,
+  onClose,
+  onSubmit,
+  setEditPreview,
+  editPreview,
+}) {
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       name: product.name,
       price: product.price,
@@ -20,12 +23,12 @@ function EditForm({ product, onClose, onSubmit, setEditPreview, editPreview }) {
   });
 
   const selected = watch("image");
+
   useEffect(() => {
     if (selected && selected[0]) {
       setEditPreview(URL.createObjectURL(selected[0]));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
+  }, [selected, setEditPreview]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
@@ -61,7 +64,11 @@ function EditForm({ product, onClose, onSubmit, setEditPreview, editPreview }) {
           />
         ) : (
           <img
-            src={product.image || PLACEHOLDER}
+            src={
+              product.image?.startsWith("http")
+                ? product.image
+                : `https://food-delivery-backend-n6at.onrender.com/${product.image}`
+            }
             alt="current"
             className="w-24 h-24 object-cover rounded"
           />

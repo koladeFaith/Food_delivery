@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import EditForm from "../components/EditForm";
 
 /* ---------------- validation ---------------- */
 const schema = yup.object().shape({
@@ -40,12 +41,9 @@ export default function AdminAddProduct() {
   const [editPreview, setEditPreview] = useState(null);
 
   // form for add
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-  } = useForm({ resolver: yupResolver(schema) });
+  const { register, handleSubmit, watch, reset } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const selectedImage = watch("image");
 
@@ -176,18 +174,19 @@ export default function AdminAddProduct() {
 
   /* ---------------- image helpers ---------------- */
   const makeImageProps = (src) => {
+    const fullSrc = src
+      ? src.startsWith("http")
+        ? src
+        : `https://food-delivery-backend-n6at.onrender.com/${src}`
+      : PLACEHOLDER;
+
     return {
-      src: src || PLACEHOLDER,
-      onLoad: (e) => {
-        // nothing special here — framer anim handles it
-        e.currentTarget.dataset.loaded = "true";
-      },
+      src: fullSrc,
       onError: (e) => {
         e.currentTarget.src = PLACEHOLDER;
       },
     };
   };
-
   /* ---------------- UI ---------------- */
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-blue-50 flex flex-col items-center py-8">
@@ -334,84 +333,3 @@ export default function AdminAddProduct() {
   );
 }
 
-/* ---------------- EditForm subcomponent ----------------
-   Uses a mini react-hook-form instance to manage the edit form.
-*/
-function EditForm({ product, onClose, onSubmit, setEditPreview, editPreview }) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-  } = useForm({
-    defaultValues: {
-      name: product.name,
-      price: product.price,
-      description: product.description,
-    },
-  });
-
-  const selected = watch("image");
-  useEffect(() => {
-    if (selected && selected[0]) {
-      setEditPreview(URL.createObjectURL(selected[0]));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-      <input
-        type="text"
-        {...register("name")}
-        className="p-3 rounded-xl border"
-        placeholder="Name"
-      />
-      <input
-        type="number"
-        {...register("price")}
-        className="p-3 rounded-xl border"
-        placeholder="Price"
-      />
-      <textarea
-        {...register("description")}
-        className="p-3 rounded-xl border"
-        placeholder="Description"
-      />
-      <div className="flex gap-3 items-center">
-        <input
-          type="file"
-          {...register("image")}
-          accept="image/*"
-          className="p-2"
-        />
-        {editPreview ? (
-          <img
-            src={editPreview}
-            alt="edit preview"
-            className="w-24 h-24 object-cover rounded"
-          />
-        ) : (
-          <img
-            src={product.image || PLACEHOLDER}
-            alt="current"
-            className="w-24 h-24 object-cover rounded"
-          />
-        )}
-      </div>
-
-      <div className="flex justify-end gap-2 mt-2">
-        <button
-          type="button"
-          onClick={onClose}
-          className="px-4 py-2 rounded-xl border">
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="px-4 py-2 rounded-xl bg-indigo-600 text-white">
-          Save
-        </button>
-      </div>
-    </form>
-  );
-}

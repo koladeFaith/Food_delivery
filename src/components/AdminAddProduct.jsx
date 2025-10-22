@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
-import {  AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ---------------- validation ---------------- */
 const schema = yup.object().shape({
@@ -17,7 +17,7 @@ const schema = yup.object().shape({
   image: yup
     .mixed()
     .test("fileType", "Only image files are allowed", (value) => {
-      if (!value) return true; // allow empty on edit
+      if (!value) return true; 
       return value && value[0] && value[0].type.startsWith("image/");
     }),
 });
@@ -176,7 +176,6 @@ export default function AdminAddProduct() {
 
   /* ---------------- image helpers ---------------- */
   const makeImageProps = (src) => {
-    const state = { loaded: false };
     return {
       src: src || PLACEHOLDER,
       onLoad: (e) => {
@@ -343,7 +342,6 @@ function EditForm({ product, onClose, onSubmit, setEditPreview, editPreview }) {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
   } = useForm({
     defaultValues: {
       name: product.name,

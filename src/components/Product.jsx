@@ -28,14 +28,14 @@ const Product = ({
   return (
     <>
       <li className=" my-5 hover:transition-transform  overflow-hidden border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
-        <div className="max-w-lg max-h-lg">
+        <div className="max-w-lg max-h-lg overflow-hidden">
           {" "}
           <img
             src={productImg}
             alt=""
             width={300}
             height={150}
-            className="w-full object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
+            className="w-full h-70 object-cover rounded-t-xl hover:duration-100 hover:ease-in-out hover:scale-105 overflow-hidden"
           />
         </div>
         <div className="mx-4">

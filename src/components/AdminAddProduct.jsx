@@ -65,7 +65,7 @@ export default function AdminAddProduct() {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://food-delivery-backend-n6at.onrender.com/api/products"
+          "https://food-delivery-backend-do2h.onrender.com/api/products"
         );
         const data = await res.json();
         const list = Array.isArray(data) ? data : data.products || [];
@@ -92,7 +92,7 @@ export default function AdminAddProduct() {
     const toastId = toast.loading("Uploading product...");
     try {
       const res = await fetch(
-        "https://food-delivery-backend-n6at.onrender.com/api/admin/add-product",
+        "https://food-delivery-backend-do2h.onrender.com/api/admin/add-product",
         { method: "POST", body: fd }
       );
       const result = await res.json();
@@ -118,7 +118,7 @@ export default function AdminAddProduct() {
     if (!ok) return;
 
     const promise = fetch(
-      `https://food-delivery-backend-n6at.onrender.com/api/products/${id}`,
+      `https://food-delivery-backend-do2h.onrender.com/api/products/${id}`,
       { method: "DELETE" }
     ).then(async (res) => {
       if (!res.ok) throw new Error("Delete failed");
@@ -154,7 +154,7 @@ export default function AdminAddProduct() {
     const toastId = toast.loading("Updating product...");
     try {
       const res = await fetch(
-        `https://food-delivery-backend-n6at.onrender.com/api/products/${editing._id}`,
+        `https://food-delivery-backend-do2h.onrender.com/api/products/${editing._id}`,
         { method: "PUT", body: fd }
       );
       const result = await res.json();
@@ -178,7 +178,7 @@ export default function AdminAddProduct() {
     const fullSrc = src
       ? src.startsWith("http")
         ? src
-        : `https://food-delivery-backend-n6at.onrender.com/${src}`
+        : `https://food-delivery-backend-do2h.onrender.com/${src}`
       : PLACEHOLDER;
 
     return {

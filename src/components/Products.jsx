@@ -20,7 +20,9 @@ const Products = ({ activeTab, query }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:9000/api/products");
+        const res = await fetch(
+          "https://food-delivery-backend-do2h.onrender.com/api/products"
+        );
         const data = await res.json();
         setProducts(data);
       } catch (error) {

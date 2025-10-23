@@ -81,7 +81,7 @@ export default function EditForm({
             src={
               product.image?.startsWith("http")
                 ? product.image
-                : `https://food-delivery-backend-n6at.onrender.com/${product.image}`
+                : `https://food-delivery-backend-do2h.onrender.com/${product.image}`
             }
             alt="current"
             className="w-24 h-24 object-cover rounded"

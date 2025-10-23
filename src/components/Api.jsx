@@ -1,5 +1,5 @@
 // components/Api.js
-const API_BASE = "sd ";
+const API_BASE = "https://food-delivery-backend-do2h.onrender.com";
 
 export const authAPI = {
   signup: async (userData) => {

@@ -19,7 +19,6 @@ const App = () => {
         {/* <Route path="/product" element={<Products />} />{" "} */}
         {/* <Route path="/signup" element={<Signup />} />{" "} */}
         {/* <Route path="/login" element={<Signin />} />{" "} */}
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/admin/add-product" element={<AdminAddProduct/>} />

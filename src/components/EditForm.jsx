@@ -19,6 +19,7 @@ export default function EditForm({
       name: product.name,
       price: product.price,
       description: product.description,
+      category: product.category || "", // added category default
     },
   });
 
@@ -49,6 +50,19 @@ export default function EditForm({
         className="p-3 rounded-xl border"
         placeholder="Description"
       />
+
+      {/*  Added Category Dropdown */}
+      <select
+        {...register("category")}
+        className="p-3 rounded-xl border"
+        defaultValue={product.category || ""}>
+        <option value="" disabled>
+          Select category
+        </option>
+        <option value="main">Main</option>
+        <option value="salad">Salad</option>
+      </select>
+
       <div className="flex gap-3 items-center">
         <input
           type="file"

@@ -18,9 +18,13 @@ const schema = yup.object().shape({
   image: yup
     .mixed()
     .test("fileType", "Only image files are allowed", (value) => {
-      if (!value) return true; 
+      if (!value) return true;
       return value && value[0] && value[0].type.startsWith("image/");
     }),
+  category: yup
+    .string()
+    .oneOf(["main", "salad"], "Category must be 'main' or 'salad'")
+    .required("Category is required"),
 });
 
 /* ---------------- placeholder ---------------- */
@@ -37,7 +41,7 @@ export default function AdminAddProduct() {
   const [loadingFetch, setLoadingFetch] = useState(true);
 
   // edit modal
-  const [editing, setEditing] = useState(null); // product being edited or null
+  const [editing, setEditing] = useState(null);
   const [editPreview, setEditPreview] = useState(null);
 
   // form for add
@@ -64,7 +68,6 @@ export default function AdminAddProduct() {
           "https://food-delivery-backend-n6at.onrender.com/api/products"
         );
         const data = await res.json();
-        // handle either array or { products: [...] }
         const list = Array.isArray(data) ? data : data.products || [];
         setProducts(list);
       } catch (err) {
@@ -84,6 +87,7 @@ export default function AdminAddProduct() {
     fd.append("price", formData.price);
     fd.append("description", formData.description);
     fd.append("image", formData.image[0]);
+    fd.append("category", formData.category); //  added category
 
     const toastId = toast.loading("Uploading product...");
     try {
@@ -93,7 +97,7 @@ export default function AdminAddProduct() {
       );
       const result = await res.json();
       if (res.ok) {
-        toast.success("Product added ✅", { id: toastId });
+        toast.success("Product added ", { id: toastId });
         setProducts((p) => [...p, result.product]);
         reset();
         setPreview(null);
@@ -125,7 +129,7 @@ export default function AdminAddProduct() {
       loading: "Deleting...",
       success: () => {
         setProducts((p) => p.filter((x) => x._id !== id));
-        return "Deleted ✅";
+        return "Deleted ";
       },
       error: "Delete failed",
     });
@@ -137,16 +141,14 @@ export default function AdminAddProduct() {
     setEditPreview(product.image || null);
   };
 
-  /* ---------------- submit edit ----------------
-     We send a FormData PUT to /api/products/:id (assumed)
-     The backend should accept form-data for edits (multer) or handle JSON if image not changed.
-  */
+  /* ---------------- submit edit ---------------- */
   const handleEditSubmit = async (values) => {
     if (!editing) return;
     const fd = new FormData();
     fd.append("name", values.name);
     fd.append("price", values.price);
     fd.append("description", values.description);
+    fd.append("category", values.category); // added category to edit too
     if (values.image && values.image[0]) fd.append("image", values.image[0]);
 
     const toastId = toast.loading("Updating product...");
@@ -157,7 +159,7 @@ export default function AdminAddProduct() {
       );
       const result = await res.json();
       if (res.ok) {
-        toast.success("Product updated ✅", { id: toastId });
+        toast.success("Product updated ", { id: toastId });
         setProducts((prev) =>
           prev.map((p) => (p._id === editing._id ? result.product : p))
         );
@@ -172,7 +174,6 @@ export default function AdminAddProduct() {
     }
   };
 
-  /* ---------------- image helpers ---------------- */
   const makeImageProps = (src) => {
     const fullSrc = src
       ? src.startsWith("http")
@@ -187,6 +188,7 @@ export default function AdminAddProduct() {
       },
     };
   };
+
   /* ---------------- UI ---------------- */
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-blue-50 flex flex-col items-center py-8">
@@ -194,24 +196,24 @@ export default function AdminAddProduct() {
 
       <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6 border border-gray-100 mb-8">
         <h2 className="text-2xl font-bold mb-4 text-center text-indigo-700">
-          🛍️ Admin — Add Product
+          Admin — Add Product
         </h2>
 
         <form
           onSubmit={handleSubmit(handleAdd)}
           className="grid grid-cols-1 gap-3">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <input
               type="text"
               placeholder="Product name"
               {...register("name")}
-              className="col-span-2 md:col-span-1 p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300"
+              className="p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300"
             />
             <input
               type="number"
               placeholder="Price"
               {...register("price")}
-              className="col-span-2 md:col-span-1 p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300"
+              className="p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300"
             />
           </div>
 
@@ -221,12 +223,24 @@ export default function AdminAddProduct() {
             className="p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300"
           />
 
-          <div className="flex items-center gap-3">
+          {/*  Added Category */}
+          <select
+            {...register("category")}
+            className="p-3 rounded-xl border focus:ring-2 focus:ring-indigo-300 w-full"
+            defaultValue="">
+            <option value="" disabled>
+              Select category
+            </option>
+            <option value="main">Main</option>
+            <option value="salad">Salad</option>
+          </select>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             <input
               type="file"
               accept="image/*"
               {...register("image")}
-              className="p-2 rounded-xl border"
+              className="p-2 rounded-xl border w-full sm:w-auto"
             />
             {preview && (
               <img
@@ -238,10 +252,10 @@ export default function AdminAddProduct() {
             )}
           </div>
 
-          <div className="flex gap-3 justify-end">
+          <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl shadow">
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl shadow w-full sm:w-auto">
               Add product
             </button>
           </div>
@@ -288,8 +302,10 @@ export default function AdminAddProduct() {
 
                   <div className="p-4">
                     <h3 className="font-semibold text-gray-800">{p.name}</h3>
-                    <p className="text-indigo-600 font-medium">${p.price}</p>
-                    <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                    <p className="text-indigo-600 font-medium text-[14px]">
+                      ${p.price}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1 line-clamp-2">
                       {p.description}
                     </p>
                   </div>
@@ -332,4 +348,3 @@ export default function AdminAddProduct() {
     </div>
   );
 }
-

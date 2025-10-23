@@ -1,5 +1,5 @@
 // components/Api.js
-const API_BASE = "https://food-delivery-backend-n6at.onrender.com";
+const API_BASE = "sd ";
 
 export const authAPI = {
   signup: async (userData) => {

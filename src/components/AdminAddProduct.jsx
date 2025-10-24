@@ -205,6 +205,7 @@ export default function AdminAddProduct() {
         Ex, iure nulla! Totam tenetur quia quidem, dolorum iusto placeat,
         delectus deserunt qui ipsam doloribus odio eveniet modi alias inventore
         iste! Repellendus.
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque accusamus voluptatibus deserunt aliquam dignissimos atque sequi, facere ex fugit amet magni excepturi, provident harum vitae adipisci earum corporis sint. Quasi!
         <form
           onSubmit={handleSubmit(handleAdd)}
           className="grid grid-cols-1 gap-3">

@@ -198,6 +198,7 @@ export default function AdminAddProduct() {
         <h2 className="text-2xl font-bold mb-4 text-center text-indigo-700">
           Admin — Add Product
         </h2>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo obcaecati voluptatem eaque sed voluptas magni iste facere recusandae aspernatur enim laudantium, exercitationem minus excepturi neque non dolore hic quod.
         <form
           onSubmit={handleSubmit(handleAdd)}
           className="grid grid-cols-1 gap-3">

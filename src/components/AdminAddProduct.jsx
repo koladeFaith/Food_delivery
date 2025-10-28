@@ -199,6 +199,7 @@ export default function AdminAddProduct() {
           Admin — Add Product
         </h2>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo obcaecati voluptatem eaque sed voluptas magni iste facere recusandae aspernatur enim laudantium, exercitationem minus excepturi neque non dolore hic quod.
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi consequatur cumque dolores fugiat sint veniam minima, quaerat eligendi impedit natus suscipit consequuntur, ullam cupiditate labore blanditiis odit alias. Placeat, earum.
         <form
           onSubmit={handleSubmit(handleAdd)}
           className="grid grid-cols-1 gap-3">

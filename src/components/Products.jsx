@@ -39,13 +39,9 @@ const Products = ({ activeTab, query }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center mt-[20px]">
-        {/* Spinner */}
-        <div className="w-10 h-10 border-4 border-blue-500  border-t-transparent rounded-full animate-spin mb-6"></div>
-        <p className="text-gray-500 mb-6">Loading products...</p>
-
+      <div className="flex flex-col items-center">
         {/* Skeleton grid */}
-        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-90 w-full">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-90 w-[85%] mt-[20px]">
           {Array.from({ length: 6 }).map((_, i) => (
             <ProductSkeleton key={i} className="" />
           ))}
@@ -55,8 +51,8 @@ const Products = ({ activeTab, query }) => {
   }
 
   return (
-    <div className="overflow-hidden cursor-pointer">
-      <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-30 overflow-hidden">
+    <div className="overflow-hidden cursor-pointer mt-[20px]">
+      <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-30 overflow-hidden w-[85%]">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <Product

@@ -2,21 +2,35 @@ import React from "react";
 
 const ProductSkeleton = () => {
   return (
-    <li className="my-5 border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl overflow-hidden animate-pulse">
+    <li className="my-5 overflow-hidden border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl">
       {/* Image placeholder */}
-      <div className="max-w-lg max-h-lg overflow-hidden">
-        <div className="w-full h-48 bg-gray-300 rounded-t-xl"></div>
+      <div className="relative w-full h-52 bg-gray-200 overflow-hidden rounded-t-xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
       </div>
 
-      {/* Content placeholder */}
       <div className="mx-4 py-4">
-        <div className="h-5 bg-gray-300 rounded w-3/4 mb-3"></div>
-        <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-        <div className="h-3 bg-gray-200 rounded w-5/6 mb-4"></div>
+        {/* Title line */}
+        <div className="relative h-4 bg-gray-200 rounded w-3/4 mb-3 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
+        </div>
 
-        <div className="flex justify-between items-center">
-          <div className="h-5 bg-gray-300 rounded w-1/4"></div>
-          <div className="h-8 bg-gray-300 rounded w-8"></div>
+        {/* Description lines */}
+        <div className="relative h-3 bg-gray-200 rounded w-full mb-2 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
+        </div>
+        <div className="relative h-3 bg-gray-200 rounded w-2/3 mb-5 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
+        </div>
+
+        {/* Price & Button row */}
+        <div className="flex justify-between items-center mt-2">
+          <div className="relative h-5 bg-gray-200 rounded w-16 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
+          </div>
+
+          <div className="relative h-8 bg-gray-200 rounded w-10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer"></div>
+          </div>
         </div>
       </div>
     </li>

@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import { useCart } from "./useCart";
-
-const SkeletonCard = () => (
-  <div className="animate-pulse bg-gray-100 rounded-2xl p-4 shadow-sm">
-    <div className="h-48 bg-gray-300 rounded-xl mb-4 "></div>
-    <div className="h-4 bg-gray-300 rounded w-3/4 mb-2 "></div>
-    <div className="h-3 bg-gray-200 rounded w-1/2 mb-4 "></div>
-    <div className="h-8 bg-gray-300 rounded"></div>
-  </div>
-);
+import ProductSkeleton from "./ProductSkeleton";
 
 const Products = ({ activeTab, query }) => {
   const { cart, addToCart, removeFromCart } = useCart();
@@ -26,7 +18,7 @@ const Products = ({ activeTab, query }) => {
         const data = await res.json();
         setProducts(data);
       } catch (error) {
-        console.error("❌ Failed to fetch products:", error);
+        console.error("Failed to fetch products:", error);
       } finally {
         setLoading(false);
       }
@@ -55,7 +47,7 @@ const Products = ({ activeTab, query }) => {
         {/* Skeleton grid */}
         <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4 md:mx-10 lg:mx-90 w-full">
           {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} className=''/>
+            <ProductSkeleton key={i} className="" />
           ))}
         </ul>
       </div>

@@ -26,7 +26,7 @@ const Products = ({ activeTab, query }) => {
 
     fetchProducts();
   }, []);
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, praesentium? Voluptates pariatur consequuntur facilis debitis voluptas a hic non, accusantium veritatis dolores ipsam nulla? Voluptatum totam rerum nesciunt vel debitis!
   // Filter by tab and search query
   const filteredProducts = products.filter((product) => {
     const matchesTab =

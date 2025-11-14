@@ -23,7 +23,7 @@ const Products = ({ activeTab, query }) => {
         setLoading(false);
       }
     };
-Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea expedita aspernatur provident necessitatibus iste minima, impedit amet culpa quisquam voluptates, ullam eaque illo magnam dolores libero.Sunt ullam labore officiis ?Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea expedita aspernatur provident necessitatibus iste minima, impedit amet culpa quisquam voluptates, ullam eaque illo magnam dolores libero.Sunt ullam labore officiis ?  lorem
+Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea expedita aspernatur provident necessitatibus iste minima, impedit amet culpa quisquam voluptates, ullam eaque illo magnam dolores libero.Sunt ullam labore officiis ?Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea expedita aspernatur provident necessitatibus iste minima, impedit amet culpa quisquam voluptates, ullam eaque illo magnam dolores libero.Sunt ullam labore officiis ?  Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea expedita aspernatur provident necessitatibus iste minima, impedit amet culpa quisquam voluptates, ullam eaque illo magnam dolores libero.Sunt ullam labore officiis ?
     fetchProducts();
   }, []);
 

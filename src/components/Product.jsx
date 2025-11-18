@@ -16,10 +16,6 @@ const Product = ({
     addToCart(product);
     toast.success(`Added ${name} to cart`);
   };
-  Lorem ipsum dolor sit amet consectetur adipisicing elit.Adipisci neque, numquam delectus vitae ex aspernatur veritatis vero reprehenderit rerum provident dolores obcaecati soluta nemo doloremque fugit consequatur at ea.Architecto ?
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit.Veniam natus cumque quam voluptates impedit dolorem, et ad nemo at ? Debitis quae commodi recusandae animi beatae minus pariatur enim autem sapiente.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere corporis modi nulla cumque tempore rem, aliquid odit adipisci facilis dolore exercitationem voluptas quidem perferendis. Modi laboriosam ratione placeat dolores minus.
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim corrupti, quibusdam perferendis soluta deserunt praesentium! Dicta voluptatibus deserunt at minima dolorum iste, accusantium architecto, tempora porro id doloremque soluta exercitationem?
   // Add toast when removing from cart (only when quantity reaches 0)
   const handleRemoveFromCart = (product) => {
     removeFromCart(product);

@@ -16,6 +16,7 @@ const Product = ({
     addToCart(product);
     toast.success(`Added ${name} to cart`);
   };
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci neque, numquam delectus vitae ex aspernatur veritatis vero reprehenderit rerum provident dolores obcaecati soluta nemo doloremque fugit consequatur at ea. Architecto?
 
   // Add toast when removing from cart (only when quantity reaches 0)
   const handleRemoveFromCart = (product) => {

@@ -28,9 +28,6 @@ const Product = ({
     <>
     
       <li className=" my-5 hover:transition-transform  overflow-hidden border border-[#e9e8e7] bg-[#fbfbfa] rounded-xl ">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae inventore, vel quidem nihil eligendi, sint pariatur tempora odit dolores consectetur laudantium minus doloremque commodi at dolor, est aliquid ex veritatis?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, maxime. Porro, odit sint dolore autem eos aliquid deserunt perspiciatis? Eos velit adipisci esse labore non vel vero porro aperiam mollitia?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quasi facere totam voluptate ipsa reprehenderit necessitatibus tempore est ipsam dignissimos laborum nam consequuntur, voluptatum, quo culpa qui, expedita animi vitae.
         <div className="max-w-lg max-h-lg overflow-hidden">
           {" "}
           <img
